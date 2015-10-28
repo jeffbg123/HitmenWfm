@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes:target/dependency/* HitmenWfm
+web:    java $JAVA_OPTS -cp target/classes:target/dependency/* com.hitmenwfm.restapi
