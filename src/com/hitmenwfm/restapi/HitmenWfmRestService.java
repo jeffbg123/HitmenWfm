@@ -20,7 +20,7 @@ public class HitmenWfmRestService {
 	@Path("/verify")
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response verifyRESTService(InputStream incomingData) {
-		String result = "HitmenWfm Successfully started..";
+		String result = "HitmenWfm Successfully started....";
  
 		// return HTTP response 200 in case of success
 		return Response.status(200).entity(result).build();
@@ -45,7 +45,6 @@ public class HitmenWfmRestService {
 	public Response postUserForget(InputStream incomingData) {
 		return null;
 	}
-	
 	
 	//POST /user/password	old pw, new pw	reset pw
 	@POST
