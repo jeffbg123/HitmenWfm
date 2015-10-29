@@ -7,10 +7,13 @@ import java.net.URL;
 
 import javax.print.attribute.standard.Media;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
  
@@ -33,17 +36,39 @@ public class HitmenWfmRestService {
 	//POST /user	user credentials and other required information	user registration
 	@POST
 	@Path("/postuser")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response postUser(InputStream incomingData) {
-		return null;
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response postUser(@DefaultValue("NONE") @QueryParam("username") String username,
+			@DefaultValue("NONE") @QueryParam("email") String email,
+			@DefaultValue("NONE") @QueryParam("password") String password, 
+			@DefaultValue("NONE") @QueryParam("firstname") String firstName, 
+			@DefaultValue("NONE") @QueryParam("lastname") String lastName,
+			@DefaultValue("NONE") @QueryParam("middlename") String middleName, 
+			@DefaultValue("NONE") @QueryParam("streetaddressline1") String streetAddressLine1, 
+			@DefaultValue("NONE") @QueryParam("streetaddressline2") String streetAddressLine2,
+			@DefaultValue("NONE") @QueryParam("streetaddressline3") String streetAddressLine3, 
+			@DefaultValue("NONE") @QueryParam("city") String city, 
+			@DefaultValue("NONE") @QueryParam("state") String state,
+			@DefaultValue("NONE") @QueryParam("zip") String zip, 
+			@DefaultValue("NONE") @QueryParam("homephone") String homePhone, 
+			@DefaultValue("NONE") @QueryParam("cellPhone") String cellPhone, 
+			@DefaultValue("NONE") @QueryParam("birthdate") String birthDate) throws Exception {
+		SqlHelper sh = new SqlHelper();
+		if(username != null)
+			sh.InsertUser( username,  email,  password,  firstName,  lastName,
+					 middleName,  streetAddressLine1,  streetAddressLine2,  streetAddressLine3,  city,
+					 state,  zip,  homePhone,  cellPhone,  birthDate);
+		String output = "POSTUSER: Added user " + username;
+
+		return Response.status(200).entity(output).build();
 	}
 	
 	//POST /user/forgot	user email	reset and send email
 	@POST
 	@Path("/postuser/forget")
-	@Consumes(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
 	public Response postUserForget(InputStream incomingData) {
-		return null;
+		String output = "POST:Jersey test : ";
+        return Response.status(200).entity(output).build();
 	}
 	
 	//POST /user/password	old pw, new pw	reset pw
