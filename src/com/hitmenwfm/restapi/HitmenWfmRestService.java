@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Date;
 
 import javax.print.attribute.standard.Media;
 import javax.ws.rs.Consumes;
@@ -16,6 +17,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
  
 @Path("/")
 public class HitmenWfmRestService {
@@ -33,6 +42,18 @@ public class HitmenWfmRestService {
 	//USER ENDPOINTS
 	//-----------------------------------------------
 	
+	
+	
+	@RequestMapping(value="user",method=RequestMethod.POST)
+	public @ResponseBody ResponseEntity<String> createUser(@RequestBody User user) throws Exception {
+		SqlHelper sh = new SqlHelper();
+		sh.InsertUser(user);
+		HttpHeaders responseHeaders = new HttpHeaders();
+	   responseHeaders.set("PostUserResult", "Success");
+	   return new ResponseEntity<String>("User Created", responseHeaders, HttpStatus.CREATED);
+	}
+	
+	/*
 	//POST /user	user credentials and other required information	user registration
 	@POST
 	@Path("/postuser")
@@ -61,7 +82,7 @@ public class HitmenWfmRestService {
 
 		return Response.status(200).entity(output).build();
 	}
-	
+	*/
 	//POST /user/forgot	user email	reset and send email
 	@POST
 	@Path("/postuser/forget")
