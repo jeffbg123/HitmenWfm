@@ -7,36 +7,18 @@ import java.net.URL;
 import java.util.Date;
 
 import javax.print.attribute.standard.Media;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DefaultValue;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
  
-@Path("/")
+@Controller
 public class HitmenWfmRestService {
-	@GET
-	@Path("/verify")
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response verifyRESTService(InputStream incomingData) {
-		String result = "HitmenWfm Successfully started....";
- 
-		// return HTTP response 200 in case of success
-		return Response.status(200).entity(result).build();
-	}
 
 	//-----------------------------------------------
 	//USER ENDPOINTS
@@ -44,13 +26,11 @@ public class HitmenWfmRestService {
 	
 	
 	
-	@RequestMapping(value="user",method=RequestMethod.POST)
-	public @ResponseBody ResponseEntity<String> createUser(@RequestBody User user) throws Exception {
+	@RequestMapping(value="/user",method=RequestMethod.POST)
+	public @ResponseBody User createUser(@RequestBody User user) throws Exception {
 		SqlHelper sh = new SqlHelper();
 		sh.InsertUser(user);
-		HttpHeaders responseHeaders = new HttpHeaders();
-	   responseHeaders.set("PostUserResult", "Success");
-	   return new ResponseEntity<String>("User Created", responseHeaders, HttpStatus.CREATED);
+		return user;
 	}
 	
 	/*
@@ -82,7 +62,7 @@ public class HitmenWfmRestService {
 
 		return Response.status(200).entity(output).build();
 	}
-	*/
+	
 	//POST /user/forgot	user email	reset and send email
 	@POST
 	@Path("/postuser/forget")
@@ -248,6 +228,6 @@ public class HitmenWfmRestService {
 		}
 		return "";
 	}
-	
+	*/
 	
 }
